@@ -12,6 +12,12 @@ Implement a function similar to str() or repr() as follows:
   Example:
   [[], [[], []]] -> '[[], [[], []]]'
 
+
+The one-liner solution:
+
+def serialize(l):
+    return '[' + ', '.join(serialize(e) for e in l) + ']'
+
 """
 
 class Converter:
@@ -21,7 +27,7 @@ class Converter:
 
     def list_to_str(self, l):
         if not isinstance(l, list):
-            raise TypeError("Expected a list, but got " + str(type(l))) 
+            raise TypeError("Expected a list, but got " + str(type(l)))
         self.s += '['
         for n, i in enumerate(l):
             self.list_to_str(i)
@@ -37,21 +43,21 @@ class ConvertTest(unittest.TestCase):
     def test_empty_string(self):
         l = ''
         self.assertRaises(TypeError, self.c.list_to_str, l)
-        
+
     def test_none(self):
         l = None
         self.assertRaises(TypeError, self.c.list_to_str, l)
-        
+
     def test_empty_list(self):
         l = []
         self.assertEqual(self.c.list_to_str(l), str(l))
-        
+
     def test_long_list(self):
-        l = [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]]
+        l = [[], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], []]
         self.assertEqual(self.c.list_to_str(l), str(l))
-    
-    def test_nested_beast(self):    
-        l = [[[[[[[[[[[[[],[],[],[[[[[[[[]]]]]]]],[],[]]]]]]]]]]]],[],[],[],[],[],[],[[[],[],[],[],[],[[[[[[[[],[[[[[]]]]]]]]]]]],[],[],[],[],[],[],[],[],[],[],[],[],[],[]]],[],[],[],[],[],[],[],[],[],[],[],[]]
+
+    def test_nested_beast(self):
+        l = [[[[[[[[[[[[[], [], [], [[[[[[[[]]]]]]]], [], []]]]]]]]]]]], [], [], [], [], [], [], [[[], [], [], [], [], [[[[[[[[], [[[[[]]]]]]]]]]]], [], [], [], [], [], [], [], [], [], [], [], [], [], []]], [], [], [], [], [], [], [], [], [], [], [], []]
         self.assertEqual(self.c.list_to_str(l), str(l))
 
 if __name__ == '__main__':
